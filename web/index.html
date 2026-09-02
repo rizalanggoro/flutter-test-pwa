@@ -31,6 +31,23 @@
 
   <title>test_pwa</title>
   <link rel="manifest" href="manifest.json">
+  <script>
+    // Force-check Flutter's service worker on every load so PWA users get the
+    // newest build without a manual hard-reload. Flutter's SW already unregisters
+    // and reloads clients automatically on activation of the new version.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg) {
+            await reg.update();
+          }
+        } catch (e) {
+          console.warn('Service worker auto-update failed:', e);
+        }
+      });
+    }
+  </script>
 </head>
 <body>
   <!--
