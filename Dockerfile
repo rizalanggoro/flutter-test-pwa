@@ -1,4 +1,15 @@
-FROM ghcr.io/cirruslabs/flutter:3.27.1 AS build
+FROM debian:bookworm-slim AS build
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        curl git unzip xz-utils fontconfig && \
+    rm -rf /var/lib/apt/lists/*
+
+ARG FLUTTER_VERSION=3.47.2
+RUN curl -fsSL "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz" | tar xJ -C /opt && \
+    mv /opt/flutter /opt/flutter-sdk
+ENV PATH="/opt/flutter-sdk/bin:$PATH"
+
 WORKDIR /app
 COPY pubspec.* .
 RUN flutter pub get
