@@ -106,12 +106,12 @@ class _TodoPageState extends State<TodoPage> {
                         )
                       : null,
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => context.push('/todo/${todo.id}'),
+                  onTap: () => context.go('/todo/${todo.id}'),
                 );
               },
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/add'),
+        onPressed: () => context.go('/add'),
         child: const Icon(Icons.add),
       ),
     );

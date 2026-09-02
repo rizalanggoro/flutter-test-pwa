@@ -78,6 +78,10 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
       appBar: AppBar(
         title: const Text('Detail Todo'),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.go('/'),
+        ),
         actions: [
           IconButton(
             icon: Icon(_editing ? Icons.check : Icons.edit),

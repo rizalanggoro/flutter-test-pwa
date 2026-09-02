@@ -41,6 +41,10 @@ class _AddTodoPageState extends State<AddTodoPage> {
       appBar: AppBar(
         title: const Text('Todo Baru'),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.go('/'),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
