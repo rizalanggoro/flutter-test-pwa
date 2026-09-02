@@ -17,6 +17,7 @@ void main() {
 final _service = TodoService();
 
 final router = GoRouter(
+  routerNeglect: true,
   routes: [
     GoRoute(path: '/', builder: (context, state) => const TodoPage()),
     GoRoute(path: '/add', builder: (context, state) => const AddTodoPage()),
