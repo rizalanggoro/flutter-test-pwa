@@ -55,7 +55,7 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
     final todos = _service.load();
     todos.removeWhere((t) => t.id == widget.todoId);
     _service.save(todos);
-    context.go('/');
+    context.pop();
   }
 
   @override
@@ -80,7 +80,7 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/'),
+          onPressed: () => context.pop(),
         ),
         actions: [
           IconButton(

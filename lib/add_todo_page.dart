@@ -25,7 +25,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
       description: _descController.text.trim(),
     ));
     _service.save(todos);
-    context.go('/');
+    context.pop();
   }
 
   @override
@@ -43,7 +43,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/'),
+          onPressed: () => context.pop(),
         ),
       ),
       body: Padding(
