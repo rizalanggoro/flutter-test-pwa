@@ -2,7 +2,7 @@ FROM debian:bookworm-slim AS build
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        curl git unzip xz-utils fontconfig && \
+        curl ca-certificates git unzip xz-utils fontconfig && \
     rm -rf /var/lib/apt/lists/*
 
 ARG FLUTTER_VERSION=3.47.2
