@@ -15,7 +15,12 @@ WORKDIR /app
 COPY pubspec.* .
 RUN flutter pub get
 COPY . .
-RUN flutter build web --release
+
+ARG BUILD_TIMESTAMP=unknown
+ARG BUILD_SHA=unknown
+RUN flutter build web --release \
+    --dart-define=BUILD_TIMESTAMP=$BUILD_TIMESTAMP \
+    --dart-define=BUILD_SHA=$BUILD_SHA
 
 FROM nginx:alpine
 COPY --from=build /app/build/web /usr/share/nginx/html

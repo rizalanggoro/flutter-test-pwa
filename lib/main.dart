@@ -3,6 +3,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
 
 import 'add_todo_page.dart';
+import 'build_info.dart';
 import 'todo.dart';
 import 'todo_detail_page.dart';
 import 'todo_service.dart';
@@ -73,43 +74,59 @@ class _TodoPageState extends State<TodoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Todo List'), centerTitle: true),
-      body: _todos.isEmpty
-          ? const Center(
-              child: Text(
-                'Belum ada todo',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-            )
-          : ListView.builder(
-              itemCount: _todos.length,
-              itemBuilder: (context, index) {
-                final todo = _todos[index];
-                return ListTile(
-                  leading: Icon(
-                    todo.completed ? Icons.check_circle : Icons.circle_outlined,
-                    color: todo.completed ? Colors.grey : Colors.grey,
-                  ),
-                  title: Text(
-                    todo.title,
-                    style: TextStyle(
-                      decoration: todo.completed
-                          ? TextDecoration.lineThrough
-                          : null,
-                      color: todo.completed ? Colors.grey : null,
+      body: Column(
+        children: [
+          Expanded(
+            child: _todos.isEmpty
+                ? const Center(
+                    child: Text(
+                      'Belum ada todo',
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
+                  )
+                : ListView.builder(
+                    itemCount: _todos.length,
+                    itemBuilder: (context, index) {
+                      final todo = _todos[index];
+                      return ListTile(
+                        leading: Icon(
+                          todo.completed
+                              ? Icons.check_circle
+                              : Icons.circle_outlined,
+                          color: todo.completed ? Colors.grey : Colors.grey,
+                        ),
+                        title: Text(
+                          todo.title,
+                          style: TextStyle(
+                            decoration: todo.completed
+                                ? TextDecoration.lineThrough
+                                : null,
+                            color: todo.completed ? Colors.grey : null,
+                          ),
+                        ),
+                        subtitle: todo.description.isNotEmpty
+                            ? Text(
+                                todo.description,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            : null,
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.go('/todo/${todo.id}'),
+                      );
+                    },
                   ),
-                  subtitle: todo.description.isNotEmpty
-                      ? Text(
-                          todo.description,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : null,
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => context.go('/todo/${todo.id}'),
-                );
-              },
+          ),
+          if (BuildInfo.hasInfo)
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                'Build ${BuildInfo.shortSha} • ${BuildInfo.timestamp}',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.go('/add'),
         child: const Icon(Icons.add),
