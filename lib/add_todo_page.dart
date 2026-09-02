@@ -39,7 +39,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todo Baru'),
+        title: const Text('Buat Todo Baru'),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -54,7 +54,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
               controller: _titleController,
               decoration: const InputDecoration(
                 labelText: 'Judul',
-                hintText: 'Masukkan judul todo...',
+                hintText: 'Judul tugas kamu...',
                 border: OutlineInputBorder(),
               ),
               autofocus: true,
