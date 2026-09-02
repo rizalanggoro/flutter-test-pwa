@@ -1,16 +1,24 @@
 # test_pwa
 
-Flutter PWA project (SDK ^3.13.2). Default starter template — no custom build or deploy tooling yet.
+Flutter PWA todo list app (SDK ^3.13.2). Data stored in browser localStorage.
 
 ## Commands
 
 - `flutter analyze` — lint/analysis (uses `flutter_lints` package, excludes `build/` and `web/`)
 - `flutter test` — widget tests
-- `flutter run -d chrome` — dev server with PWA support (service worker via `web/`)
-- `flutter build web` — production web build
+- `flutter run -d chrome` — dev server with PWA support
+- `flutter build web` — production build (outputs to `build/web/`)
+
+## Architecture
+
+- `lib/main.dart` — app entry + todo list UI
+- `lib/todo.dart` — Todo model with JSON serialization
+- `lib/todo_service.dart` — localStorage read/write via `package:web`
+- `web/manifest.json` — PWA manifest (installable)
+- `web/index.html` — service worker bootstrap
 
 ## Notes
 
-- Entry point: `lib/main.dart`
-- Web config: `web/manifest.json` (PWA manifest), `web/index.html` (service worker bootstrap)
-- No CI, no custom scripts, no codegen, no environment files
+- Uses `package:web` (not `dart:html`) for web APIs
+- PWA install: run `flutter build web` then serve `build/web/` with any static server
+- Service worker auto-registered by Flutter's `flutter_bootstrap.js`
