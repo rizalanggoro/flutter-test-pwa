@@ -73,60 +73,57 @@ class _TodoPageState extends State<TodoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Todo List'), centerTitle: true),
-      body: Column(
-        children: [
-          Expanded(
-            child: _todos.isEmpty
-                ? const Center(
-                    child: Text(
-                      'Belum ada todo',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                  )
-                : ListView.builder(
-                    itemCount: _todos.length,
-                    itemBuilder: (context, index) {
-                      final todo = _todos[index];
-                      return ListTile(
-                        leading: Icon(
-                          todo.completed
-                              ? Icons.check_circle
-                              : Icons.circle_outlined,
-                          color: todo.completed ? Colors.grey : Colors.grey,
-                        ),
-                        title: Text(
-                          todo.title,
-                          style: TextStyle(
-                            decoration: todo.completed
-                                ? TextDecoration.lineThrough
-                                : null,
-                            color: todo.completed ? Colors.grey : null,
-                          ),
-                        ),
-                        subtitle: todo.description.isNotEmpty
-                            ? Text(
-                                todo.description,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              )
-                            : null,
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () => context.go('/todo/${todo.id}'),
-                      );
-                    },
-                  ),
-          ),
-          if (BuildInfo.hasInfo)
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(
+      appBar: AppBar(
+        title: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Todo List PWA'),
+            if (BuildInfo.hasInfo)
+              Text(
                 'Build ${BuildInfo.shortSha} • ${BuildInfo.timestamp}',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-            ),
-        ],
+          ],
+        ),
+        centerTitle: true,
       ),
+      body: _todos.isEmpty
+          ? const Center(
+              child: Text(
+                'Belum ada todo',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+            )
+          : ListView.builder(
+              itemCount: _todos.length,
+              itemBuilder: (context, index) {
+                final todo = _todos[index];
+                return ListTile(
+                  leading: Icon(
+                    todo.completed ? Icons.check_circle : Icons.circle_outlined,
+                    color: todo.completed ? Colors.grey : Colors.grey,
+                  ),
+                  title: Text(
+                    todo.title,
+                    style: TextStyle(
+                      decoration: todo.completed
+                          ? TextDecoration.lineThrough
+                          : null,
+                      color: todo.completed ? Colors.grey : null,
+                    ),
+                  ),
+                  subtitle: todo.description.isNotEmpty
+                      ? Text(
+                          todo.description,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : null,
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.go('/todo/${todo.id}'),
+                );
+              },
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.go('/add'),
         child: const Icon(Icons.add),
