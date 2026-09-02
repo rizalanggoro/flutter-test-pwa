@@ -6,7 +6,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 ARG FLUTTER_VERSION=3.47.2
-RUN curl -fsSL "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz" | tar xJ -C /opt && \
+RUN curl -kfsSL "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz" | tar xJ -C /opt && \
     mv /opt/flutter /opt/flutter-sdk
 ENV PATH="/opt/flutter-sdk/bin:$PATH"
 
